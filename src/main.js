@@ -35,11 +35,11 @@ const startpos1 =[
   new THREE.Vector3(0,0, -8),
 ];
 const NAMES101 = [
-//  'sphere',               // 2208 triangles
-//  'weirdCube1',           // 4240 triangles
+  'sphere',               // 2208 triangles
+  'weirdCube1',           // 4240 triangles
 //  'ring',                 // 2304 triangles
   'cube',                 // 12   triangles
-  '67p_low_res',          // 62908 traingles
+//  '67p_low_res',          // 62908 traingles
 //  'cylinder1',            // 2820 triangles
 //  'pointyCone',           // 4896 triangles
 //  'shape1',               // 20   triangles
