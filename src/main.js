@@ -25,12 +25,12 @@ document.body.appendChild(renderer.domElement);
 
 //these state the position of the two objects for later - makes it easier to play with coordinatesh
 const scales = [
-  1,
-  0.1,
+  0.25,
+  0.25,
 ];
 const startpos1 =[ 
-  new THREE.Vector3(90, 0, 0),
-  new THREE.Vector3(-120, 0, 0),
+  new THREE.Vector3(9, 0, 0),
+  new THREE.Vector3(-9, 0, 0),
   new THREE.Vector3(0, 7, 0),
   new THREE.Vector3(0,0, -8),
 ];
@@ -38,7 +38,7 @@ const NAMES101 = [
   'sphere',               // 2208 triangles
   'weirdCube1',           // 4240 triangles
 //  'ring',                 // 2304 triangles
-  'cube',                 // 12   triangles
+//  'cube',                 // 12   triangles
 //  '67p_low_res',          // 62908 traingles
 //  'cylinder1',            // 2820 triangles
 //  'pointyCone',           // 4896 triangles
@@ -321,7 +321,7 @@ function loadCubdexes__afterMeshesLoaded(){
 
 function testLoadFile(){
 
-  fetch('/models/json_objs/partitioned_ring.json')
+  fetch('models/json_objs/partitioned_ring.json')
   .then(response => response.json())
   .then(data => {
     console.log('Loaded JSON:', data);
@@ -688,10 +688,10 @@ function loadMesh(url, scale = 0.03, position = new THREE.Vector3()) {
 
 function loadModelAndJSON(name, scale, pos) {
   return new Promise(res => {
-    loader.load(`/models/${name}.obj`, obj => {
+    loader.load(`models/${name}.obj`, obj => {
       // Loading the matching JSON
       console.log("Time to search /models/json_objs/partitioned_${name[0]}.json");
-      fetch(`/models/json_objs/partitioned_${name[0]}.json`)
+      fetch(`models/json_objs/partitioned_${name[0]}.json`)
         .then(r => r.json())
         .then(jsonData => {
           res({ obj, jsonData, scale, pos });
