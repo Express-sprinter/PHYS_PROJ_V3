@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WebGPU OBJ Loader Example</title>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
+import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/OBJLoader.js';
+
+async function init() {
+  // 1. Setup canvas and WebGPU
+  const canvas = document.createElement('canvas');
+  canvas.width = 800;
+  canvas.height = 600;
+  document.body.appendChild(canvas);
+
+  if (!navigator.gpu) {
+    console.error("WebGPU not supported");
+    return;
+  }
+
+  const adapter = await navigator.gpu.requestAdapter();
+  const device = await adapter.requestDevice();
+  const context = canvas.getContext('webgpu');
+
+  const format = navigator.gpu.getPreferredCanvasFormat();
+  context.configure({ device, format });
+
+  console.log("WebGPU ready!");
+
+  // 2. Load OBJ using Three.js
+  const loader = new OBJLoader();
+  loader.load('path/to/your/model.obj', async (obj) => {
+    console.log("OBJ loaded:", obj);
+
+    // Extract vertices from first mesh
+    let mesh = obj.children.find(c => c.isMesh);
+    let positions = mesh.geometry.attributes.position.array;
+
+    console.log("Vertex count:", positions.length / 3);
+
+    // 3. Upload vertex positions to GPU buffer
+    const vertexBuffer = device.createBuffer({
+      size: positions.byteLength,
+      usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
+      mappedAtCreation: true
+    });
+    new Float32Array(vertexBuffer.getMappedRange()).set(positions);
+    vertexBuffer.unmap();
+
+    console.log("Vertex buffer uploaded to GPU:", vertexBuffer);
+  });
+}
+
+init();
+</script>
+</head>
+<body></body>
+</html>
