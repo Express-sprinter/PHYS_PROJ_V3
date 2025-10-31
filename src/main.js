@@ -18,7 +18,7 @@ var globalModels = {};
  
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 120;
+camera.position.z = 20;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -34,6 +34,7 @@ const startpos1 =[
   new THREE.Vector3(0, 7, 0),
   new THREE.Vector3(0,0, -8),
 ];
+//62920 - cube and asteroid
 const NAMES101 = [
   'sphere',               // 2208 triangles
   'weirdCube1',           // 4240 triangles
@@ -48,7 +49,7 @@ const NAMES101 = [
 
 ];
 const light = new THREE.DirectionalLight(0xffffff);
-light.position.set(-5000,0,0);
+light.position.set(-50,0,0);
 scene.add(light);
 
 
@@ -766,7 +767,7 @@ function setUpworld(){
     cube index creation stuff - setting it all up 
     then creation of the JSON type files
 */  
-  
+  theJSONstuff = {} ;
   //createJSON_stuff();
   //console.log(theJSONstuff);
 }
